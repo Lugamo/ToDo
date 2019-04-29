@@ -12,7 +12,7 @@
    npm install
    ```
 
-3. To fill the database with dummy users and books, run the command:
+3. To fill the database with dummy users and Tasks, run the command:
 
    ```
    npm run fill
