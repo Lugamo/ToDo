@@ -12,16 +12,18 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as tasksActions from '../../redux/tasks/tasksActions';
+import * as formActions from '../../redux/form/formActions';
 import styles from '../../styles/ContentStyle';
 
 class taskCard extends Component {
   constructor(props) {
     super(props);
     this.handleStatus = this.handleStatus.bind(this);
+    this.handleForm = this.handleForm.bind(this);
   }
 
   handleStatus(e) {
-    const { title, description, status, id, assignedTo } = this.props;
+    const { title, description, id, assignedTo } = this.props;
     const { putDataTasks } = this.props;
     const endpoint = `/task/${id}`;
     
@@ -34,8 +36,22 @@ class taskCard extends Component {
     });
   }
 
+  handleForm() {
+    const { title, description, id, assignedTo, status } = this.props;
+    const { openForm } = this.props;
+
+    openForm({
+      type: 'edit',
+      title,
+      description,
+      id,
+      assignedTo,
+      status
+    })
+  }
+
   render() {
-    const { title, description, status, id } = this.props;
+    const { title, description, status } = this.props;
     const { classes } = this.props;
 
     return (
@@ -51,7 +67,7 @@ class taskCard extends Component {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary">
+          <Button size="small" color="primary" onClick={this.handleForm}>
             Edit
           </Button>
           <Select
@@ -71,7 +87,7 @@ class taskCard extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ ...tasksActions }, dispatch);
+  return bindActionCreators({ ...tasksActions, ...formActions }, dispatch);
 }
 
 // Get the specific data from the store

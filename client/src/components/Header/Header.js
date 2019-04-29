@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as tasksActions from '../../redux/tasks/tasksActions';
+import * as formActions from '../../redux/form/formActions';
 import styles from '../../styles/HeaderStyle';
 
 class Header extends Component {
@@ -49,6 +50,14 @@ class Header extends Component {
     const { setFilter } = this.props;
     
     setFilter(`${e.target.value.toLowerCase()}`)
+  }
+
+  handleForm() {
+    const { openForm } = this.props;
+    openForm({
+      type: 'create',
+      id: ''
+    });
   }
 
   render() {
@@ -115,7 +124,7 @@ class Header extends Component {
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <IconButton color="inherit">
+              <IconButton color="inherit" onClick={() => this.handleForm()}>
                 <NotificationsIcon />
               </IconButton>
               <IconButton
@@ -142,13 +151,12 @@ class Header extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ ...tasksActions }, dispatch);
+  return bindActionCreators({ ...tasksActions, ...formActions }, dispatch);
 }
 
 // Get the specific data from the store
 const mapStateToProps = state => ({
   tasks: state.tasks,
-  users: state.users,
 });
 
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Header));

@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import * as tasksActions from '../../redux/tasks/tasksActions';
 import * as usersActions from '../../redux/users/usersActions';
 import TaskCard from './taskCard';
+import Form from './Form';
 import styles from '../../styles/ContentStyle';
 
 class Content extends Component {
@@ -21,7 +22,6 @@ class Content extends Component {
   
   renderCards(value) {
     const { tasks: { tasks, filter} } = this.props;
-    console.log(tasks);
     let listCards = []
     if (tasks) {
       listCards = tasks
@@ -65,6 +65,7 @@ class Content extends Component {
 
     return (
       <div className={classes.container}>
+        <Form />
         {this.renderPapers()}
       </div>
     );

@@ -38,7 +38,7 @@ app.post('/user', (req, res) => {
   userController.createUser(req, res);
 });
 
-// Create an users
+// Get an users
 app.get('/user', (req, res) => {
   userController.getUsers(req, res);
 });

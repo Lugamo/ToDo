@@ -24,9 +24,16 @@ const taskSchema = mongoose.Schema({
     required: false,
   },
   assignedTo: [{
-    type: String,
-    trim: false,
-    required: false,
+    name: {
+      type: String,
+      trim: false,
+      required: false,
+    },
+    id: {
+      type: String,
+      trim: false,
+      required: false,
+    }
   }
 ],
   status: {

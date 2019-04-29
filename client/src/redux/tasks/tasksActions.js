@@ -1,4 +1,4 @@
-import { TASKS_REQUEST, TASKS_SUCCESS, TASKS_SUCCESS_PUT, TASKS_FAILURE, TASKS_FILTER} from './tasksTypes';
+import { TASKS_REQUEST, TASKS_SUCCESS, TASKS_SUCCESS_PUT, TASKS_FAILURE, TASKS_FILTER, TASKS_SUCCESS_POST} from './tasksTypes';
 
 function getDataTasks(endpoint) {
   return (dispatch) => {
@@ -54,7 +54,6 @@ function putDataTasks(endpoint, body) {
       body: JSON.stringify(body)
     }).then(res => res.json())
       .then((response) => {
-        console.log(response.status);
         dispatch({
           type: TASKS_SUCCESS_PUT,
           payload: {
@@ -72,8 +71,39 @@ function putDataTasks(endpoint, body) {
   };
 }
 
+function postDataTasks(endpoint, body) {
+  return (dispatch) => {
+    dispatch({ type: TASKS_REQUEST });
+    
+    const url = `http://localhost:3001${endpoint}`;
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body)
+    }).then(res => res.json())
+      .then((response) => {
+        dispatch({
+          type: TASKS_SUCCESS_POST,
+          payload: {
+            task: response,
+          },
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: TASKS_FAILURE,
+          payload: {},
+          error: error.message.toString(),
+        });
+      });
+  };
+}
+
 export {
   getDataTasks,
+  postDataTasks,
   setFilter,
   putDataTasks,
 }

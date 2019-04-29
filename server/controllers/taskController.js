@@ -48,7 +48,10 @@ function postTask(req, res) {
       if (err) return res.status(500).send(err);
       res.status(200).send({
         id: taskData.id,
-        title: taskData.title
+        title: taskData.title,
+        description: taskData.description,
+        assignedTo: taskData.assignedTo,
+        status: taskData.status
       });
     })
   }
